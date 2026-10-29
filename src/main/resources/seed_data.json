@@ -1,0 +1,365 @@
+{
+  "note": "SAMPLE DATA for the Pet Finder demo. Names, prices (kwacha), phone numbers, emails and health records are invented. Do not present as real.",
+  "sellers": [
+    {
+      "id": 1,
+      "businessName": "Copperbelt Pet Haven",
+      "sellerType": "Breeder",
+      "contactPerson": "Sample Contact",
+      "phone": "0970000001",
+      "email": "haven@example.com",
+      "town": "Ndola",
+      "verified": true
+    },
+    {
+      "id": 2,
+      "businessName": "Mwila Family Farm",
+      "sellerType": "Farmer",
+      "contactPerson": "Sample Contact",
+      "phone": "0970000002",
+      "email": "farm@example.com",
+      "town": "Kitwe",
+      "verified": true
+    },
+    {
+      "id": 3,
+      "businessName": "Lusaka Pets Corner",
+      "sellerType": "Individual",
+      "contactPerson": "Sample Contact",
+      "phone": "0970000003",
+      "email": "corner@example.com",
+      "town": "Lusaka",
+      "verified": false
+    }
+  ],
+  "listings": [
+    {
+      "id": 1,
+      "sellerId": 1,
+      "status": "Available",
+      "price": 3500,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Duke",
+        "species": "Dog",
+        "breed": "Doberman",
+        "lifeStage": "Adult",
+        "sex": "Male",
+        "colour": "Black",
+        "temperament": "Loyal, alert",
+        "healthRecords": [
+          {
+            "vaccine": "Rabies",
+            "date": "2026-08-12"
+          },
+          {
+            "vaccine": "DHPP",
+            "date": "2026-08-12"
+          }
+        ]
+      },
+      "imageUrl": "/images/doberman-adult-dog.jpeg"
+    },
+    {
+      "id": 2,
+      "sellerId": 1,
+      "status": "Available",
+      "price": 2200,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Zara",
+        "species": "Dog",
+        "breed": "Doberman",
+        "lifeStage": "Puppy",
+        "sex": "Female",
+        "colour": "Black",
+        "temperament": "Playful",
+        "healthRecords": [
+          {
+            "vaccine": "DHPP (first dose)",
+            "date": "2026-09-20"
+          }
+        ]
+      },
+      "imageUrl": "/images/doberman-puppy.jpeg"
+    },
+    {
+      "id": 3,
+      "sellerId": 2,
+      "status": "Available",
+      "price": 5500,
+      "quantity": 1,
+      "animal": {
+        "type": "Livestock",
+        "name": "Dusty",
+        "species": "Donkey",
+        "breed": "Miniature donkey",
+        "lifeStage": "Calf",
+        "sex": "Female",
+        "colour": "Grayish brown",
+        "purpose": "Companion",
+        "healthRecords": [
+          {
+            "vaccine": "Tetanus",
+            "date": "2026-09-05"
+          }
+        ]
+      },
+      "imageUrl": "/images/miniature-donkey-calf.jpeg"
+    },
+    {
+      "id": 4,
+      "sellerId": 2,
+      "status": "Reserved",
+      "price": 7500,
+      "quantity": 1,
+      "animal": {
+        "type": "Livestock",
+        "name": "Pepper",
+        "species": "Donkey",
+        "breed": "Miniature donkey",
+        "lifeStage": "Adult",
+        "sex": "Male",
+        "colour": "Grayish brown",
+        "purpose": "Companion",
+        "healthRecords": [
+          {
+            "vaccine": "Tetanus",
+            "date": "2026-07-18"
+          }
+        ]
+      },
+      "imageUrl": "/images/miniature-adult-donkey.jpeg"
+    },
+    {
+      "id": 5,
+      "sellerId": 1,
+      "status": "Available",
+      "price": 3000,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Anubis",
+        "species": "Cat",
+        "breed": "Egyptian Mau",
+        "lifeStage": "Adult",
+        "sex": "Male",
+        "colour": "Gray with black stripes",
+        "temperament": "Active, friendly",
+        "healthRecords": [
+          {
+            "vaccine": "Rabies",
+            "date": "2026-08-30"
+          },
+          {
+            "vaccine": "FVRCP",
+            "date": "2026-08-30"
+          }
+        ]
+      },
+      "imageUrl": "/images/egyptian-mau-cat.jpeg"
+    },
+    {
+      "id": 6,
+      "sellerId": 2,
+      "status": "Available",
+      "price": 1800,
+      "quantity": 1,
+      "animal": {
+        "type": "Livestock",
+        "name": "Mama Brown",
+        "species": "Goat",
+        "breed": "Boer goat",
+        "lifeStage": "Adult",
+        "sex": "Female",
+        "colour": "Brown and white",
+        "purpose": "Breeding",
+        "healthRecords": [
+          {
+            "vaccine": "Clostridial vaccine",
+            "date": "2026-08-02"
+          }
+        ]
+      },
+      "imageUrl": "/images/adult-goat.jpeg"
+    },
+    {
+      "id": 7,
+      "sellerId": 1,
+      "status": "Available",
+      "price": 3200,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Sunny",
+        "species": "Dog",
+        "breed": "Golden Retriever",
+        "lifeStage": "Adult",
+        "sex": "Female",
+        "colour": "Golden",
+        "temperament": "Friendly",
+        "healthRecords": [
+          {
+            "vaccine": "Rabies",
+            "date": "2026-07-25"
+          },
+          {
+            "vaccine": "DHPP",
+            "date": "2026-07-25"
+          }
+        ]
+      },
+      "imageUrl": "/images/golden-retriever-adult.jpeg"
+    },
+    {
+      "id": 8,
+      "sellerId": 1,
+      "status": "Available",
+      "price": 2400,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Goldie",
+        "species": "Dog",
+        "breed": "Golden Retriever",
+        "lifeStage": "Puppy",
+        "sex": "Male",
+        "colour": "Golden",
+        "temperament": "Playful",
+        "healthRecords": [
+          {
+            "vaccine": "DHPP (first dose)",
+            "date": "2026-09-22"
+          }
+        ]
+      },
+      "imageUrl": "/images/golden-retriever-puppy.jpeg"
+    },
+    {
+      "id": 9,
+      "sellerId": 3,
+      "status": "Available",
+      "price": 300,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Smoky",
+        "species": "Rabbit",
+        "breed": "Mini Lop",
+        "lifeStage": "Adult",
+        "sex": "Female",
+        "colour": "Gray",
+        "temperament": "Gentle",
+        "healthRecords": [
+          {
+            "vaccine": "Myxomatosis",
+            "date": "2026-09-01"
+          }
+        ]
+      },
+      "imageUrl": "/images/grey-rabbit.jpeg"
+    },
+    {
+      "id": 10,
+      "sellerId": 1,
+      "status": "Available",
+      "price": 2600,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Marmalade",
+        "species": "Cat",
+        "breed": "British Shorthair",
+        "lifeStage": "Kitten",
+        "sex": "Female",
+        "colour": "Orange",
+        "temperament": "Playful",
+        "healthRecords": [
+          {
+            "vaccine": "FVRCP (first dose)",
+            "date": "2026-09-28"
+          }
+        ]
+      },
+      "imageUrl": "/images/british-short-hair-kitten.jpeg"
+    },
+    {
+      "id": 11,
+      "sellerId": 1,
+      "status": "Available",
+      "price": 3400,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Ginger",
+        "species": "Cat",
+        "breed": "British Shorthair",
+        "lifeStage": "Adult",
+        "sex": "Male",
+        "colour": "Orange",
+        "temperament": "Calm",
+        "healthRecords": [
+          {
+            "vaccine": "Rabies",
+            "date": "2026-08-15"
+          },
+          {
+            "vaccine": "FVRCP",
+            "date": "2026-08-15"
+          }
+        ]
+      },
+      "imageUrl": "/images/british-short-hair-adult.jpeg"
+    },
+    {
+      "id": 12,
+      "sellerId": 2,
+      "status": "Available",
+      "price": 25,
+      "quantity": 10,
+      "animal": {
+        "type": "Livestock",
+        "name": "Village chicks (per chick)",
+        "species": "Chicken",
+        "breed": "Village chicken",
+        "lifeStage": "Chick",
+        "sex": "Unsexed",
+        "colour": "Brown with a hint of yellow",
+        "purpose": "Egg laying",
+        "healthRecords": [
+          {
+            "vaccine": "Newcastle disease",
+            "date": "2026-10-10"
+          }
+        ]
+      },
+      "imageUrl": "/images/village-chics.jpeg"
+    },
+    {
+      "id": 13,
+      "sellerId": 3,
+      "status": "Available",
+      "price": 350,
+      "quantity": 1,
+      "animal": {
+        "type": "Pet",
+        "name": "Snowy",
+        "species": "Rabbit",
+        "breed": "New Zealand White",
+        "lifeStage": "Adult",
+        "sex": "Male",
+        "colour": "White",
+        "temperament": "Gentle",
+        "healthRecords": [
+          {
+            "vaccine": "Myxomatosis",
+            "date": "2026-09-01"
+          }
+        ]
+      },
+      "imageUrl": "/images/white-rabbit.jpeg"
+    }
+  ]
+}
