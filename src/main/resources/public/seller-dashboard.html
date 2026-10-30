@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your dashboard | Pet Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="images/pet-finder-logo.jpeg" alt="" class="brand-logo">
+      <span>Pet Finder <span class="brand-portal">· Seller portal</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Account">
+      <span class="nav-user" id="seller-name"></span>
+      <a href="seller-login.html" class="nav-link nav-link-outline">Log out</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <h1 class="page-title">Your dashboard</h1>
+
+    <p class="detail-message" id="dashboard-message">Loading your dashboard…</p>
+
+    <div id="dashboard" hidden>
+      <!-- Verification banner: green when verified, amber while pending -->
+      <section class="verify-banner" id="verify-banner" aria-labelledby="verify-heading">
+        <span class="verify-icon" id="verify-icon" aria-hidden="true"></span>
+        <div>
+          <h2 class="verify-heading" id="verify-heading">
+            Verification status: <span class="tag" id="verify-badge"></span>
+          </h2>
+          <p class="verify-text" id="verify-text"></p>
+        </div>
+      </section>
+
+      <section aria-labelledby="listings-heading">
+        <div class="section-heading">
+          <h2 class="section-heading-title" id="listings-heading">My listings</h2>
+          <button type="button" class="btn btn-primary" id="add-animal" aria-controls="add-animal-section" aria-expanded="false">+ Add animal</button>
+        </div>
+
+        <p class="form-success-note" id="publish-message" role="status" tabindex="-1" hidden></p>
+
+        <div class="table-card">
+          <div class="table-scroll">
+            <table class="listings-table">
+              <caption class="sr-only">My listings</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Animal</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Health record</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="listings-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Add animal form: hidden until "+ Add animal" is pressed -->
+      <section class="form-card add-animal-card" id="add-animal-section" aria-labelledby="add-animal-heading" hidden>
+        <h2 class="section-heading-title" id="add-animal-heading" tabindex="-1">Add animal</h2>
+
+        <form id="add-animal-form" novalidate>
+          <div class="field">
+            <label for="animal-name" class="field-label">Name</label>
+            <input type="text" id="animal-name" class="text-input" placeholder="e.g. Simba" required aria-describedby="animal-name-error">
+            <p class="field-error" id="animal-name-error" hidden></p>
+          </div>
+
+          <fieldset class="field" id="animal-type" aria-describedby="animal-type-error">
+            <legend class="field-label">Type</legend>
+            <div class="choice-group choice-group-2">
+              <label class="choice"><input type="radio" name="animalType" value="Pet"> Pet</label>
+              <label class="choice"><input type="radio" name="animalType" value="Livestock"> Livestock</label>
+            </div>
+            <p class="field-error" id="animal-type-error" hidden></p>
+          </fieldset>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="animal-species" class="field-label">Species</label>
+              <!-- Options are filled in by add-animal.js once Pet or Livestock is chosen -->
+              <select id="animal-species" class="text-input" required aria-describedby="animal-species-error">
+                <option value="">Choose Pet or Livestock first</option>
+              </select>
+              <p class="field-error" id="animal-species-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="animal-breed" class="field-label">Breed</label>
+              <input type="text" id="animal-breed" class="text-input" placeholder="e.g. Boerboel, Tswana goat" required aria-describedby="animal-breed-error">
+              <p class="field-error" id="animal-breed-error" hidden></p>
+            </div>
+          </div>
+
+          <div class="field-row field-row-3">
+            <div class="field">
+              <label for="animal-colour" class="field-label">Colour</label>
+              <input type="text" id="animal-colour" class="text-input" required aria-describedby="animal-colour-error">
+              <p class="field-error" id="animal-colour-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="animal-age" class="field-label">Age group</label>
+              <select id="animal-age" class="text-input" required aria-describedby="animal-age-error">
+                <option value="">Choose</option>
+                <option>Puppy</option>
+                <option>Kitten</option>
+                <option>Kit</option>
+                <option>Chick</option>
+                <option>Calf</option>
+                <option>Kid</option>
+                <option>Lamb</option>
+                <option>Foal</option>
+                <option>Piglet</option>
+                <option>Young</option>
+                <option>Adult</option>
+                <option>Senior</option>
+              </select>
+              <p class="field-error" id="animal-age-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="animal-sex" class="field-label">Sex</label>
+              <select id="animal-sex" class="text-input" required aria-describedby="animal-sex-error">
+                <option value="">Choose</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option value="Unsexed">Unsexed / not sure</option>
+              </select>
+              <p class="field-error" id="animal-sex-error" hidden></p>
+            </div>
+          </div>
+
+          <!-- Only shown for Pets -->
+          <div class="field" id="temperament-field" hidden>
+            <label for="animal-temperament" class="field-label">Temperament</label>
+            <input type="text" id="animal-temperament" class="text-input" placeholder="e.g. Playful, good with children" aria-describedby="animal-temperament-error">
+            <p class="field-error" id="animal-temperament-error" hidden></p>
+          </div>
+
+          <!-- Only shown for Livestock -->
+          <div class="field" id="purpose-field" hidden>
+            <label for="animal-purpose" class="field-label">Purpose</label>
+            <select id="animal-purpose" class="text-input" aria-describedby="animal-purpose-error">
+              <option value="">Choose</option>
+              <option>Meat</option>
+              <option>Milk</option>
+              <option>Eggs</option>
+              <option>Breeding</option>
+              <option>Companion</option>
+            </select>
+            <p class="field-error" id="animal-purpose-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="animal-price" class="field-label">Price (kwacha)</label>
+            <div class="price-input">
+              <span class="price-prefix" aria-hidden="true">K</span>
+              <input type="number" id="animal-price" class="text-input" min="0" step="1" inputmode="numeric" required aria-describedby="animal-price-hint animal-price-error">
+            </div>
+            <p class="field-hint" id="animal-price-hint">Enter 0 to list the animal as Free.</p>
+            <p class="field-error" id="animal-price-error" hidden></p>
+          </div>
+
+          <fieldset class="health-fieldset" id="health-fieldset" aria-describedby="health-error">
+            <legend class="field-label">Vaccinations and dates</legend>
+            <div id="health-rows"></div>
+            <p class="field-error" id="health-error" hidden></p>
+            <button type="button" class="btn btn-small btn-outline" id="add-health-row">+ Add another vaccination</button>
+          </fieldset>
+
+          <div class="field">
+            <span class="field-label" id="photos-heading">Photos</span>
+            <label class="upload-box" id="photos-box">
+              <input type="file" id="animal-photos" class="sr-only" accept="image/jpeg,image/png,image/webp" multiple
+                     aria-labelledby="photos-heading photos-text" aria-describedby="photos-chosen photos-hint photos-error">
+              <span class="upload-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              </span>
+              <span>
+                <span class="upload-text" id="photos-text">Add photos</span>
+                <span class="upload-chosen" id="photos-chosen"></span>
+              </span>
+            </label>
+            <p class="field-hint" id="photos-hint">Optional. Up to 8 photos (JPG, PNG or WebP). Clear, recent photos help buyers trust your listing.</p>
+            <p class="field-error" id="photos-error" hidden></p>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">Publish listing</button>
+            <button type="button" class="btn btn-secondary btn-large" id="cancel-add-animal">Cancel</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <!-- One row of the listings table. seller-dashboard.js copies this for every listing. -->
+  <template id="listing-row-template">
+    <tr>
+      <td>
+        <div class="listing-animal">
+          <img class="listing-thumb" alt="" loading="lazy">
+          <div>
+            <span class="listing-name"></span>
+            <span class="listing-sub"></span>
+          </div>
+        </div>
+      </td>
+      <!-- data-label is shown next to each cell on phones, where each row becomes a card -->
+      <td data-label="Type">
+        <div>
+          <span class="listing-type"></span>
+          <span class="listing-sub listing-species"></span>
+        </div>
+      </td>
+      <td data-label="Health record" class="listing-health"></td>
+      <td data-label="Status"><span class="tag listing-status"></span></td>
+      <td data-label="Actions">
+        <!-- These buttons do nothing yet -->
+        <div class="listing-actions">
+          <button type="button" class="btn btn-small btn-outline listing-edit">Edit</button>
+          <button type="button" class="btn btn-small btn-outline listing-rehome">Mark rehomed</button>
+        </div>
+      </td>
+    </tr>
+  </template>
+
+  <!-- One vaccination row in the Add animal form. add-animal.js copies this. -->
+  <template id="health-row-template">
+    <div class="health-row">
+      <div class="field">
+        <label class="field-label health-name-label"></label>
+        <input type="text" class="text-input health-name" placeholder="e.g. Rabies, DHPP 1st dose">
+        <p class="field-error health-name-error" hidden></p>
+      </div>
+      <div class="field">
+        <label class="field-label health-date-label">Date given<span class="sr-only health-date-which"></span></label>
+        <input type="date" class="text-input health-date">
+        <p class="field-error health-date-error" hidden></p>
+      </div>
+      <button type="button" class="btn btn-small btn-secondary health-remove">Remove</button>
+    </div>
+  </template>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">Pet Finder · Seller portal</p>
+      <p class="footer-note">Sample design: all names, phone numbers, prices and listings are placeholders.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/seller-dashboard.js"></script>
+  <script src="js/add-animal.js"></script>
+</body>
+</html>

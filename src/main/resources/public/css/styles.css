@@ -1132,6 +1132,220 @@ fieldset[aria-invalid="true"] .choice {
 .forgot-note { margin: -10px 0 14px; text-align: right; }
 .forgot-note:empty { display: none; }
 
+/* ---------- Seller dashboard ---------- */
+
+.nav-user {
+  align-self: center;
+  margin-right: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.verify-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 16px 0 32px;
+  padding: 16px 20px;
+  border: 2px solid;
+  border-radius: 14px;
+}
+
+.verify-banner.is-pending { background: #fdf1dc; border-color: #d9a54a; }
+.verify-banner.is-verified { background: var(--green-soft); border-color: #7fb898; }
+
+.verify-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+
+.is-pending .verify-icon { background: var(--orange); color: var(--ink); }
+.is-verified .verify-icon { background: var(--green); color: #fff; }
+
+.verify-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.verify-text { margin: 0; font-size: 0.92rem; }
+
+.section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.section-heading-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.table-card {
+  background: #fff;
+  border: 1.5px solid var(--line-soft);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.listings-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.listings-table th {
+  padding: 12px 14px;
+  background: var(--cream);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.listings-table td {
+  padding: 12px 14px;
+  border-top: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+
+.listing-animal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.listing-thumb {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--sand);
+  object-fit: cover;
+}
+
+.listing-name { display: block; font-weight: 800; }
+
+.listing-sub {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.listing-type { display: block; font-weight: 600; }
+
+.listing-health.is-missing { color: var(--red); font-weight: 700; }
+
+.listing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-small {
+  padding: 5px 12px;
+  font-size: 0.82rem;
+}
+
+.listings-empty {
+  padding: 28px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* Briefly highlight a listing that was just published */
+.listings-table tr.is-new { animation: new-row 3s ease-out; }
+@keyframes new-row { from { background: var(--green-soft); } to { background: transparent; } }
+
+.form-success-note {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  background: var(--green-soft);
+  border: 2px solid var(--green);
+  border-radius: 12px;
+  color: var(--green);
+  font-weight: 700;
+}
+
+/* ---------- Add animal form ---------- */
+
+.add-animal-card {
+  max-width: 680px;
+  margin-top: 32px;
+}
+
+.add-animal-card .section-heading-title { margin-bottom: 18px; }
+
+.field-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.choice-group-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 360px; }
+
+.price-input {
+  display: flex;
+  max-width: 260px;
+}
+
+.price-prefix {
+  display: grid;
+  place-items: center;
+  padding: 0 14px;
+  background: var(--sand);
+  border: 1.5px solid var(--line);
+  border-right: 0;
+  border-radius: 10px 0 0 10px;
+  font-weight: 800;
+}
+
+.price-input .text-input { border-radius: 0 10px 10px 0; }
+
+.health-fieldset {
+  margin: 0 0 18px;
+  padding: 14px 18px 18px;
+  background: #fff;
+  border: 1.5px solid var(--line-soft);
+  border-radius: 14px;
+  min-width: 0;
+}
+
+.health-fieldset legend { padding: 0 6px; }
+.health-fieldset.is-invalid { border-color: var(--red); border-width: 2px; }
+.health-fieldset > .field-error { margin: 0 0 12px; }
+
+.health-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 0 14px;
+  align-items: start;
+}
+
+.health-row .field { margin-bottom: 14px; }
+
+/* Line the Remove button up with the inputs, below the labels */
+.health-remove { margin-top: 30px; }
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.form-actions .btn-primary { flex: 1; }
+
 /* ---------- Footer ---------- */
 
 .site-footer {
@@ -1190,8 +1404,29 @@ fieldset[aria-invalid="true"] .choice {
   .fact-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .detail-name { font-size: 1.8rem; }
   .field-row,
-  .choice-group { grid-template-columns: minmax(0, 1fr); }
+  .choice-group,
+  .health-row { grid-template-columns: minmax(0, 1fr); }
+  .health-remove { margin: 0 0 14px; justify-self: start; }
   .form-card { padding: 20px 16px; }
+
+  /* Listings table: each row becomes a small card, with its column name beside each value */
+  .listings-table { min-width: 0; }
+  .listings-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .listings-table tr { display: block; padding: 12px 14px; border-top: 1px solid var(--line-soft); }
+  .listings-table tr:first-child { border-top: 0; }
+  .listings-table td { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px; padding: 6px 0; border: 0; }
+  .listings-table td:first-child { display: block; padding-bottom: 10px; }
+  .listings-table td[data-label]::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    align-self: center;
+  }
+  .listings-table .tag { justify-self: start; }
+  .listings-empty { display: block !important; }
   .footer-inner { padding: 20px 16px; }
   .browse-layout { grid-template-columns: minmax(0, 1fr); }
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }

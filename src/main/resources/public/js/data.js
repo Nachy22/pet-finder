@@ -25,7 +25,9 @@ function findSeller(data, sellerId) {
   return data.sellers.find((s) => s.id === sellerId) || null;
 }
 
+// 3500 becomes "K3,500"; 0 becomes "Free"
 function formatPrice(amount) {
+  if (amount === 0) return "Free";
   return "K" + amount.toLocaleString("en-US");
 }
 
