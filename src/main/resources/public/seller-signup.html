@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create your seller account | Pet Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="images/pet-finder-logo.jpeg" alt="" class="brand-logo">
+      <span>Pet Finder <span class="brand-portal">· Seller portal</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html" class="nav-link">Back to Pet Finder</a>
+      <a href="seller-login.html" class="nav-link nav-link-outline">Seller login</a>
+    </nav>
+  </header>
+
+  <main class="page page-narrow">
+    <h1 class="page-title">Create your seller account</h1>
+    <p class="page-intro">We check every seller before their listings go live. This usually takes 1–2 working days.</p>
+
+    <div class="form-card">
+      <form id="signup-form" novalidate>
+        <div class="field">
+          <label for="business-name" class="field-label">Business or seller name</label>
+          <input type="text" id="business-name" name="businessName" class="text-input" placeholder="e.g. Chanda Boerboels" autocomplete="organization" required aria-describedby="business-name-error">
+          <p class="field-error" id="business-name-error" hidden></p>
+        </div>
+
+        <fieldset class="field" id="seller-type" aria-describedby="seller-type-error">
+          <legend class="field-label">Seller type</legend>
+          <div class="choice-group">
+            <label class="choice"><input type="radio" name="sellerType" value="Breeder" required> Breeder</label>
+            <label class="choice"><input type="radio" name="sellerType" value="Farmer"> Farmer</label>
+            <label class="choice"><input type="radio" name="sellerType" value="Individual"> Individual</label>
+          </div>
+          <p class="field-error" id="seller-type-error" hidden></p>
+        </fieldset>
+
+        <div class="field">
+          <label for="contact-person" class="field-label">Contact person</label>
+          <input type="text" id="contact-person" name="contactPerson" class="text-input" autocomplete="name" required aria-describedby="contact-person-error">
+          <p class="field-error" id="contact-person-error" hidden></p>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="phone" class="field-label">Phone</label>
+            <input type="tel" id="phone" name="phone" class="text-input" placeholder="+260 9X XXX XXXX" autocomplete="tel" required aria-describedby="phone-error">
+            <p class="field-error" id="phone-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="email" class="field-label">Email</label>
+            <input type="email" id="email" name="email" class="text-input" autocomplete="email" required aria-describedby="email-error">
+            <p class="field-error" id="email-error" hidden></p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="town" class="field-label">Town</label>
+            <select id="town" name="town" class="text-input" required aria-describedby="town-error">
+              <option value="">Choose a town</option>
+              <option>Lusaka</option>
+              <option>Ndola</option>
+              <option>Kitwe</option>
+              <option>Livingstone</option>
+              <option>Kabwe</option>
+              <option>Chingola</option>
+              <option>Mufulira</option>
+              <option>Luanshya</option>
+              <option>Chipata</option>
+              <option>Kasama</option>
+              <option>Solwezi</option>
+              <option>Mansa</option>
+              <option>Mongu</option>
+              <option>Choma</option>
+              <option>Kafue</option>
+              <option value="Other">Other (tell us in Area)</option>
+            </select>
+            <p class="field-error" id="town-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="area" class="field-label">Area</label>
+            <input type="text" id="area" name="area" class="text-input" placeholder="e.g. Kansenshi, Chelstone" autocomplete="address-level3" required aria-describedby="area-error">
+            <p class="field-error" id="area-error" hidden></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label" id="document-heading">Verification document</span>
+          <label class="upload-box" id="upload-box">
+            <input type="file" id="document" name="document" class="sr-only" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required
+                   aria-labelledby="document-heading upload-text" aria-describedby="document-chosen document-hint document-error">
+            <span class="upload-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5M7 10l5-5 5 5M5 19h14"/></svg>
+            </span>
+            <span>
+              <span class="upload-text" id="upload-text">Upload a document</span>
+              <span class="upload-sub">NRC, business registration or farm/kennel certificate</span>
+              <span class="upload-chosen" id="document-chosen"></span>
+            </span>
+          </label>
+          <p class="field-hint" id="document-hint">PDF, JPG or PNG, up to 5 MB. Only our team sees this document.</p>
+          <p class="field-error" id="document-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="password" class="field-label">Password</label>
+          <input type="password" id="password" name="password" class="text-input" autocomplete="new-password" required aria-describedby="password-hint password-error">
+          <p class="field-hint" id="password-hint">At least 8 characters, with a number.</p>
+          <p class="field-error" id="password-error" hidden></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Create account</button>
+      </form>
+
+      <!-- Shown instead of the form once it's filled in correctly -->
+      <div class="form-success" id="signup-success" tabindex="-1" hidden>
+        <h2 class="form-success-title">Account created (demo)</h2>
+        <p>Your account is pending verification. We usually check new sellers within 1–2 working days.</p>
+        <p class="field-hint">This is a demo: nothing was saved and no document was uploaded.</p>
+      </div>
+
+      <p class="form-switch">Already have an account? <a href="seller-login.html">Log in</a></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">Pet Finder · Seller portal</p>
+      <p class="footer-note">Sample design: all names, phone numbers, prices and listings are placeholders.</p>
+    </div>
+  </footer>
+
+  <script src="js/seller-signup.js"></script>
+</body>
+</html>
