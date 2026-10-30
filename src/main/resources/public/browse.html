@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse animals | Pet Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="images/pet-finder-logo.jpeg" alt="" class="brand-logo">
+      <span>Pet Finder</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="browse.html" class="nav-link is-active" aria-current="page">Browse pets</a>
+      <a href="seller-sign-up.html" class="nav-link">Sell pets</a>
+      <a href="seller-login.html" class="nav-link nav-link-outline">Seller login</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <h1 class="page-title">Browse animals</h1>
+    <p class="page-intro">Pets and livestock from sellers across Zambia. Every listing has a health record.</p>
+
+    <form class="search" id="search-form" role="search">
+      <label for="search-input" class="field-label">Search</label>
+      <div class="search-row">
+        <input type="search" id="search-input" class="search-input" placeholder="Breed, seller, colour or species">
+        <button type="submit" class="btn btn-primary search-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          Search
+        </button>
+      </div>
+    </form>
+
+    <div class="browse-layout">
+      <aside class="filters" aria-labelledby="filters-heading">
+        <h2 id="filters-heading" class="filters-title">Filters</h2>
+
+        <label for="filter-species" class="field-label">Species</label>
+        <select id="filter-species" class="filter-select" data-field="species">
+          <option value="">All species</option>
+        </select>
+
+        <label for="filter-breed" class="field-label">Breed</label>
+        <select id="filter-breed" class="filter-select" data-field="breed">
+          <option value="">All breeds</option>
+        </select>
+
+        <label for="filter-colour" class="field-label">Colour</label>
+        <select id="filter-colour" class="filter-select" data-field="colour">
+          <option value="">All colours</option>
+        </select>
+
+        <label for="filter-seller" class="field-label">Seller</label>
+        <select id="filter-seller" class="filter-select" data-field="seller">
+          <option value="">All sellers</option>
+        </select>
+
+        <button type="button" id="clear-filters" class="btn btn-secondary">Clear filters</button>
+      </aside>
+
+      <section class="results" aria-live="polite">
+        <p class="results-count" id="results-count">Loading animals…</p>
+        <div class="card-grid" id="card-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- One animal card. browse.js copies this for every listing. -->
+  <template id="card-template">
+    <article class="card">
+      <div class="card-media">
+        <span class="status-badge"></span>
+        <img class="card-img" alt="" loading="lazy">
+        <span class="card-placeholder" aria-hidden="true">🐾</span>
+      </div>
+      <div class="card-body">
+        <div class="card-heading">
+          <h3 class="card-name"></h3>
+          <span class="card-price"></span>
+        </div>
+        <dl class="card-facts">
+          <dt>Breed</dt><dd data-fact="breed"></dd>
+          <dt>Age</dt><dd data-fact="age"></dd>
+          <dt>Colour</dt><dd data-fact="colour"></dd>
+          <dt>Seller</dt><dd data-fact="seller"></dd>
+        </dl>
+        <div class="card-tags">
+          <span class="tag seller-tag"></span>
+          <span class="tag tag-outline health-tag">✓ Health record</span>
+        </div>
+        <a class="btn btn-primary btn-block card-link">View details</a>
+      </div>
+    </article>
+  </template>
+
+  <script src="js/browse.js"></script>
+</body>
+</html>
