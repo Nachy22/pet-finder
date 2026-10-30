@@ -23,11 +23,6 @@ function formatPhone(phone) {
   return phone.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3");
 }
 
-// WhatsApp links need the number with the Zambia code: "0970000001" becomes "260970000001"
-function whatsappNumber(phone) {
-  return phone.replace(/^0/, "260");
-}
-
 function showMessage(text) {
   message.replaceChildren(text + " ");
   const back = document.createElement("a");
@@ -164,10 +159,28 @@ function setUpEnquiryForm(listing) {
       firstEmpty.focus();
       return;
     }
+    const phone = document.getElementById("enquiry-phone");
+    if (!/^\+?\d{9,13}$/.test(phone.value.replace(/[\s-]/g, ""))) {
+      feedback.textContent = "Please enter a phone number like 097 000 0001.";
+      feedback.className = "form-feedback is-error";
+      phone.focus();
+      return;
+    }
     feedback.textContent = "";
     openScamWarning(() => {
-      // DEMO: nothing is sent yet. Replace this with a call to the backend when it's ready.
-      feedback.textContent = "Enquiry sent (demo). Nothing was really sent to the seller yet.";
+      // DEMO: instead of sending to the backend, save the enquiry in this browser so the
+      // seller dashboard can show it. Replace this with a call to the backend when it's ready.
+      const saved = saveDemoEnquiry({
+        id: "local-" + Date.now(),
+        listingId: listing.id,
+        buyerName: document.getElementById("enquiry-name").value.trim(),
+        buyerPhone: phone.value.trim(),
+        message: document.getElementById("enquiry-message").value.trim(),
+        sentAt: new Date().toISOString(),
+      });
+      feedback.textContent = saved
+        ? "Enquiry sent (demo). It was saved in this browser only, for the seller dashboard demo."
+        : "Enquiry sent (demo), but this browser wouldn't let us save it for the dashboard.";
       feedback.className = "form-feedback";
     });
   });

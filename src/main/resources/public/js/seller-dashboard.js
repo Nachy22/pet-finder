@@ -99,6 +99,66 @@ function showListings(listings) {
   for (const listing of listings) rows.append(buildRow(listing));
 }
 
+// ---------- Enquiries ----------
+// DEMO DATA: enquiries come from mock/enquiries.json plus any saved in this browser by animal.html
+// (see loadEnquiries in data.js). The backend will replace this with the seller's real enquiries.
+
+function sameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+// "Today, 09:14", "Yesterday, 16:40" or "24 Oct 2026"
+function formatEnquiryDate(isoDate) {
+  const date = new Date(isoDate);
+  const now = new Date();
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  const time = date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+
+  if (sameDay(date, now)) return "Today, " + time;
+  if (sameDay(date, yesterday)) return "Yesterday, " + time;
+  return date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function buildEnquiryCard(enquiry, listing) {
+  const item = document.getElementById("enquiry-template").content.firstElementChild.cloneNode(true);
+
+  item.querySelector(".enquiry-buyer").textContent = enquiry.buyerName;
+
+  const date = item.querySelector(".enquiry-date");
+  date.dateTime = enquiry.sentAt;
+  date.textContent = formatEnquiryDate(enquiry.sentAt);
+
+  const animalLink = item.querySelector(".enquiry-animal");
+  animalLink.textContent = displayName(listing);
+  animalLink.href = "animal.html?id=" + encodeURIComponent(listing.id);
+
+  item.querySelector(".enquiry-message").textContent = enquiry.message;
+
+  const call = item.querySelector(".enquiry-call");
+  call.textContent = "Call " + enquiry.buyerPhone;
+  call.href = "tel:" + enquiry.buyerPhone.replace(/[^\d+]/g, "");
+
+  const whatsapp = item.querySelector(".enquiry-whatsapp");
+  whatsapp.href = "https://wa.me/" + whatsappNumber(enquiry.buyerPhone);
+  whatsapp.setAttribute("aria-label", "WhatsApp " + enquiry.buyerName);
+
+  return item;
+}
+
+async function showEnquiries(sellerListings) {
+  const listingsById = new Map(sellerListings.map((l) => [l.id, l]));
+
+  // Only enquiries about this seller's animals, newest first
+  const enquiries = (await loadEnquiries())
+    .filter((e) => listingsById.has(e.listingId))
+    .sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+
+  const list = document.getElementById("enquiry-list");
+  list.replaceChildren(...enquiries.map((e) => buildEnquiryCard(e, listingsById.get(e.listingId))));
+  document.getElementById("enquiries-empty").hidden = enquiries.length > 0;
+}
+
 async function init() {
   let data;
   try {
@@ -118,7 +178,9 @@ async function init() {
 
   document.getElementById("seller-name").textContent = seller.businessName;
   showBanner(seller);
-  showListings(data.listings.filter((l) => l.sellerId === seller.id));
+  const sellerListings = data.listings.filter((l) => l.sellerId === seller.id);
+  showListings(sellerListings);
+  await showEnquiries(sellerListings);
 
   message.hidden = true;
   document.getElementById("dashboard").hidden = false;

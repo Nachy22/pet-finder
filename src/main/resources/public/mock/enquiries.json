@@ -1,0 +1,29 @@
+{
+  "note": "DEMO ENQUIRIES for the Pet Finder front end. Temporary: the backend will replace this file. Buyer names, phone numbers and messages are invented.",
+  "enquiries": [
+    {
+      "id": "demo-1",
+      "listingId": 1,
+      "buyerName": "Mwila K. (demo)",
+      "buyerPhone": "+260 96 000 0000",
+      "message": "Hello, is Duke still available? Can I come to see him on Saturday?",
+      "sentAt": "2026-10-29T09:14:00"
+    },
+    {
+      "id": "demo-2",
+      "listingId": 2,
+      "buyerName": "Bwalya T. (demo)",
+      "buyerPhone": "+260 77 000 0000",
+      "message": "Is Zara's second vaccination done? I'm in Lusaka but can travel to Ndola.",
+      "sentAt": "2026-10-28T16:40:00"
+    },
+    {
+      "id": "demo-3",
+      "listingId": 10,
+      "buyerName": "Natasha M. (demo)",
+      "buyerPhone": "+260 95 000 0000",
+      "message": "What food is she eating now, and is the price negotiable?",
+      "sentAt": "2026-10-24T11:05:00"
+    }
+  ]
+}

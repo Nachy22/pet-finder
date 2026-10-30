@@ -66,6 +66,8 @@
         </div>
       </section>
 
+      <!-- Add animal form (left) and Enquiries (right). While the form is hidden, Enquiries uses the full width. -->
+      <div class="dashboard-lower">
       <!-- Add animal form: hidden until "+ Add animal" is pressed -->
       <section class="form-card add-animal-card" id="add-animal-section" aria-labelledby="add-animal-heading" hidden>
         <h2 class="section-heading-title" id="add-animal-heading" tabindex="-1">Add animal</h2>
@@ -200,6 +202,14 @@
           </div>
         </form>
       </section>
+
+      <section class="enquiries" aria-labelledby="enquiries-heading">
+        <h2 class="section-heading-title" id="enquiries-heading">Enquiries</h2>
+        <p class="field-hint enquiries-note">Demo enquiries: three sample messages, plus any you send from an animal page in this browser.</p>
+        <p class="enquiries-empty" id="enquiries-empty" hidden>No enquiries yet.</p>
+        <ul class="enquiry-list" id="enquiry-list"></ul>
+      </section>
+      </div>
     </div>
   </main>
 
@@ -232,6 +242,24 @@
         </div>
       </td>
     </tr>
+  </template>
+
+  <!-- One enquiry card. seller-dashboard.js copies this for every enquiry. -->
+  <template id="enquiry-template">
+    <li>
+      <article class="enquiry-card">
+        <div class="enquiry-top">
+          <h3 class="enquiry-buyer"></h3>
+          <time class="enquiry-date"></time>
+        </div>
+        <p class="enquiry-about">About: <a class="enquiry-animal"></a></p>
+        <p class="enquiry-message"></p>
+        <div class="enquiry-actions">
+          <a class="btn btn-small btn-outline enquiry-call"></a>
+          <a class="btn btn-small btn-outline enquiry-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </article>
+    </li>
   </template>
 
   <!-- One vaccination row in the Add animal form. add-animal.js copies this. -->
