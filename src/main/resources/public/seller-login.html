@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller login | Pet Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="images/pet-finder-logo.jpeg" alt="" class="brand-logo">
+      <span>Pet Finder <span class="brand-portal">· Seller portal</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html" class="nav-link">Back to Pet Finder</a>
+    </nav>
+  </header>
+
+  <main class="page page-auth">
+    <img src="images/pet-finder-logo.jpeg" alt="" class="auth-logo">
+    <h1 class="page-title">Seller login</h1>
+    <p class="page-intro">Manage your listings and reply to buyers.</p>
+
+    <div class="form-card">
+      <!-- Shown when the email/phone and password don't match -->
+      <div class="form-alert" id="login-alert" role="alert" hidden>
+        <span class="form-alert-icon" aria-hidden="true">!</span>
+        <p id="login-alert-text"></p>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="login-id" class="field-label">Email or phone</label>
+          <input type="text" id="login-id" name="login" class="text-input" autocomplete="username" required aria-describedby="login-id-error">
+          <p class="field-error" id="login-id-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="login-password" class="field-label">Password</label>
+          <input type="password" id="login-password" name="password" class="text-input" autocomplete="current-password" required aria-describedby="login-password-error">
+          <p class="field-error" id="login-password-error" hidden></p>
+        </div>
+
+        <p class="forgot-row">
+          <a href="#" id="forgot-password">Forgot password?</a>
+        </p>
+        <p class="field-hint forgot-note" id="forgot-note" role="status"></p>
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Log in</button>
+      </form>
+    </div>
+
+    <p class="form-switch">New seller? <a href="seller-signup.html">Create an account</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">Pet Finder · Seller portal</p>
+      <p class="footer-note">Sample design: all names, phone numbers, prices and listings are placeholders.</p>
+    </div>
+  </footer>
+
+  <script src="js/seller-login.js"></script>
+</body>
+</html>
