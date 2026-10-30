@@ -1,8 +1,5 @@
 // Browse page: loads the listings, then lets the visitor search and filter them.
-
-// TEMPORARY: reads the mock copy of seed_data.json.
-// When the backend is ready, change this to its API address.
-const DATA_URL = "mock/seed_data.json";
+// Needs js/data.js to be loaded first.
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
@@ -17,17 +14,15 @@ let searchText = "";
 
 // Turn the raw data (sellers + listings) into one simple object per animal card.
 function toAnimals(data) {
-  const sellersById = new Map(data.sellers.map((s) => [s.id, s]));
-
   return data.listings.map((listing) => {
-    const seller = sellersById.get(listing.sellerId) || {};
+    const seller = findSeller(data, listing.sellerId) || {};
     return {
       id: listing.id,
       status: listing.status,
       price: listing.price,
       quantity: listing.quantity,
       imageUrl: listing.imageUrl,
-      name: listing.animal.name,
+      name: displayName(listing),
       species: listing.animal.species,
       breed: listing.animal.breed,
       age: listing.animal.lifeStage,
@@ -38,18 +33,6 @@ function toAnimals(data) {
       sellerVerified: Boolean(seller.verified),
     };
   });
-}
-
-function formatPrice(amount) {
-  return "K" + amount.toLocaleString("en-US");
-}
-
-// "Village chicks (per chick)" with 10 available becomes "Village chicks (10)".
-function displayName(animal) {
-  if (animal.quantity > 1) {
-    return animal.name.replace(/\s*\(.*\)$/, "") + " (" + animal.quantity + ")";
-  }
-  return animal.name;
 }
 
 // Fill a dropdown with every distinct value of one field, sorted A to Z.
@@ -92,7 +75,7 @@ function buildCard(animal) {
     media.classList.add("no-image");
   }
 
-  card.querySelector(".card-name").textContent = displayName(animal);
+  card.querySelector(".card-name").textContent = animal.name;
   card.querySelector(".card-price").textContent =
     formatPrice(animal.price) + (animal.quantity > 1 ? " each" : "");
 
@@ -111,8 +94,8 @@ function buildCard(animal) {
   }
 
   const link = card.querySelector(".card-link");
-  link.href = "details.html?id=" + encodeURIComponent(animal.id);
-  link.setAttribute("aria-label", "View details for " + displayName(animal));
+  link.href = "animal.html?id=" + encodeURIComponent(animal.id);
+  link.setAttribute("aria-label", "View details for " + animal.name);
 
   return card;
 }
@@ -165,9 +148,7 @@ clearButton.addEventListener("click", () => {
 
 async function init() {
   try {
-    const response = await fetch(DATA_URL);
-    if (!response.ok) throw new Error("HTTP " + response.status);
-    animals = toAnimals(await response.json());
+    animals = toAnimals(await loadPetData());
   } catch (error) {
     console.error("Could not load animals:", error);
     resultsCount.textContent =

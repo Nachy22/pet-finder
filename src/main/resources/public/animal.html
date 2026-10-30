@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal details | Pet Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="images/pet-finder-logo.jpeg" alt="" class="brand-logo">
+      <span>Pet Finder</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="browse.html" class="nav-link">Browse pets</a>
+      <a href="seller-signup.html" class="nav-link">Sell pets</a>
+      <a href="seller-login.html" class="nav-link nav-link-outline">Seller login</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <a href="browse.html" class="back-link">← Back to all animals</a>
+
+    <!-- Shown while loading, or if the animal can't be found -->
+    <p class="detail-message" id="detail-message">Loading animal…</p>
+
+    <div id="detail" hidden>
+      <div class="detail-top">
+        <div class="detail-photo" id="detail-photo">
+          <img id="animal-photo" alt="">
+          <span class="card-placeholder" aria-hidden="true">🐾</span>
+        </div>
+
+        <div class="detail-info">
+          <div class="detail-heading">
+            <h1 class="detail-name" id="animal-name"></h1>
+            <span class="tag tag-dot" id="status-badge"></span>
+          </div>
+          <p class="detail-price" id="animal-price"></p>
+
+          <!-- Shown only when the animal is Reserved or Rehomed -->
+          <div class="status-notice" id="status-notice" role="status" hidden></div>
+
+          <dl class="fact-boxes">
+            <div class="fact-box"><dt>Breed</dt><dd id="fact-breed"></dd></div>
+            <div class="fact-box"><dt>Species</dt><dd id="fact-species"></dd></div>
+            <div class="fact-box"><dt>Colour</dt><dd id="fact-colour"></dd></div>
+            <div class="fact-box"><dt>Age group</dt><dd id="fact-age"></dd></div>
+            <div class="fact-box"><dt>Sex</dt><dd id="fact-sex"></dd></div>
+            <div class="fact-box" id="fact-quantity-box" hidden><dt>Available</dt><dd id="fact-quantity"></dd></div>
+          </dl>
+
+          <section class="panel" aria-labelledby="health-heading">
+            <h2 class="panel-title" id="health-heading">
+              <span class="panel-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M12 10v6M9 13h6"/></svg>
+              </span>
+              Health and vaccination record
+            </h2>
+            <div class="table-scroll">
+              <table class="health-table">
+                <thead>
+                  <tr><th scope="col">Vaccine or treatment</th><th scope="col">Date given</th></tr>
+                </thead>
+                <tbody id="health-rows"></tbody>
+              </table>
+            </div>
+            <p class="panel-note">Sample record. Ask the seller to show the original vet card before you pay.</p>
+          </section>
+
+          <section class="panel" id="breed-panel" aria-labelledby="breed-heading" hidden>
+            <h2 class="panel-title" id="breed-heading"></h2>
+            <p id="breed-summary"></p>
+            <dl class="breed-facts">
+              <dt>Adult size</dt><dd id="breed-size"></dd>
+              <dt>Lifespan</dt><dd id="breed-lifespan"></dd>
+              <dt>Needs</dt><dd id="breed-needs"></dd>
+              <dt>Good to know</dt><dd id="breed-good"></dd>
+            </dl>
+          </section>
+        </div>
+      </div>
+
+      <div class="detail-bottom">
+        <section class="panel seller-panel" aria-labelledby="seller-name">
+          <p class="eyebrow">Seller</p>
+          <div class="detail-heading">
+            <h2 class="seller-name" id="seller-name"></h2>
+            <span class="tag" id="seller-badge"></span>
+          </div>
+          <dl class="contact-list">
+            <dt>Phone</dt><dd><a id="seller-phone"></a></dd>
+            <dt>WhatsApp</dt><dd><a id="seller-whatsapp" target="_blank" rel="noopener"></a></dd>
+            <dt>Email</dt><dd><a id="seller-email"></a></dd>
+            <dt>Location</dt><dd id="seller-town"></dd>
+          </dl>
+          <div class="map-placeholder" aria-hidden="true">
+            <span class="map-pin"></span>
+            <span class="map-label" id="map-label">Map placeholder · approximate area</span>
+          </div>
+        </section>
+
+        <section class="enquiry" aria-labelledby="enquiry-heading">
+          <h2 class="enquiry-title" id="enquiry-heading">Send an enquiry</h2>
+          <p class="enquiry-intro">The seller will reply by phone or WhatsApp. <a href="scam-safety.html">Read our safety tips</a> before you pay.</p>
+          <p class="enquiry-closed" id="enquiry-closed" hidden>This animal has been rehomed, so the seller isn't taking enquiries for it.</p>
+
+          <form id="enquiry-form" novalidate>
+            <fieldset id="enquiry-fields">
+              <label for="enquiry-name" class="field-label">Your name</label>
+              <input type="text" id="enquiry-name" name="name" class="text-input" autocomplete="name" required>
+
+              <label for="enquiry-phone" class="field-label">Your phone</label>
+              <input type="tel" id="enquiry-phone" name="phone" class="text-input" placeholder="+260 9X XXX XXXX" autocomplete="tel" required>
+
+              <label for="enquiry-message" class="field-label">Message</label>
+              <textarea id="enquiry-message" name="message" class="text-input" rows="4" required></textarea>
+
+              <p class="form-feedback" id="enquiry-feedback" role="status"></p>
+              <button type="submit" class="btn btn-primary btn-large">Send enquiry</button>
+            </fieldset>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">Pet Finder · Zambia</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="browse.html">Browse pets</a>
+        <a href="seller-signup.html">Sell pets</a>
+        <a href="scam-safety.html">Scam safety tips</a>
+        <a href="seller-login.html">Seller login</a>
+      </nav>
+      <p class="footer-note">Sample data: all names, phone numbers, prices and listings are placeholders.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/animal.js"></script>
+</body>
+</html>

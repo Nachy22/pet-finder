@@ -1,0 +1,66 @@
+{
+  "note": "SAMPLE breed profiles for the Pet Finder demo. General guidance only; check with a vet before relying on it.",
+  "Doberman": {
+    "summary": "A sleek, athletic and loyal dog, often kept as a guard dog and family companion.",
+    "adultSize": "Medium to large, about 30–40 kg",
+    "lifespan": "About 10–12 years",
+    "needs": "Daily exercise, training and company",
+    "goodToKnow": "Alert and protective; best with an experienced owner"
+  },
+  "Golden Retriever": {
+    "summary": "A friendly, gentle and eager-to-please dog, popular with families.",
+    "adultSize": "Medium to large, about 25–34 kg",
+    "lifespan": "About 10–12 years",
+    "needs": "Daily walks, play and regular brushing",
+    "goodToKnow": "Good with children; sheds a lot of hair"
+  },
+  "Egyptian Mau": {
+    "summary": "A naturally spotted, fast and active cat that bonds closely with its family.",
+    "adultSize": "Small to medium, about 3–5 kg",
+    "lifespan": "About 12–15 years",
+    "needs": "Daily play, climbing spaces and attention",
+    "goodToKnow": "Can be shy with strangers at first"
+  },
+  "British Shorthair": {
+    "summary": "A calm, sturdy cat with a thick, plush coat and an easy-going nature.",
+    "adultSize": "Medium to large, about 4–8 kg",
+    "lifespan": "About 12–15 years",
+    "needs": "Weekly brushing and gentle daily play",
+    "goodToKnow": "Gains weight easily, so watch its food"
+  },
+  "Mini Lop": {
+    "summary": "A small, friendly rabbit with floppy ears that enjoys gentle handling.",
+    "adultSize": "Small, about 1.5–2 kg",
+    "lifespan": "About 7–10 years",
+    "needs": "Fresh hay, space to hop and daily company",
+    "goodToKnow": "Needs a cool, shaded spot in hot weather"
+  },
+  "New Zealand White": {
+    "summary": "A large, calm white rabbit kept both as a pet and for meat.",
+    "adultSize": "Medium to large, about 4–5 kg",
+    "lifespan": "About 5–8 years",
+    "needs": "Fresh hay, a roomy hutch and shade",
+    "goodToKnow": "Sensitive to heat; keep out of direct sun"
+  },
+  "Miniature donkey": {
+    "summary": "A small, gentle and affectionate donkey, kept as a companion or for light work.",
+    "adultSize": "Up to about 90 cm at the shoulder, 100–200 kg",
+    "lifespan": "About 25–35 years",
+    "needs": "Grazing or hay, shelter and hoof trimming every 6–10 weeks",
+    "goodToKnow": "Should not be kept alone; does best with another donkey"
+  },
+  "Boer goat": {
+    "summary": "A hardy, fast-growing meat goat that handles hot climates well.",
+    "adultSize": "Large; does about 50–80 kg, bucks heavier",
+    "lifespan": "About 8–12 years",
+    "needs": "Grazing and browsing, shelter, deworming and hoof care",
+    "goodToKnow": "Good mothers and easy to keep in small herds"
+  },
+  "Village chicken": {
+    "summary": "A hardy local free-range chicken, kept for eggs and meat.",
+    "adultSize": "Small; hens about 1–1.5 kg, cocks about 2 kg",
+    "lifespan": "About 5–8 years",
+    "needs": "A secure coop at night, space to scratch and Newcastle disease vaccines",
+    "goodToKnow": "Lays fewer eggs than commercial layers but costs little to keep"
+  }
+}
