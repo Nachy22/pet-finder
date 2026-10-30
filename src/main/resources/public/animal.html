@@ -130,6 +130,34 @@
     </div>
   </main>
 
+  <!-- Scam warning pop-up, shown before an enquiry is sent.
+       showModal() greys out the page, closes on Escape and keeps Tab inside the pop-up. -->
+  <dialog class="scam-dialog" id="scam-dialog" aria-labelledby="scam-title">
+    <div class="scam-header">
+      <span class="scam-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M12 8v4"/><circle cx="12" cy="15.5" r="0.6" fill="currentColor"/></svg>
+      </span>
+      <h2 class="scam-title" id="scam-title">Stay safe. Don’t get scammed.</h2>
+      <button type="button" class="scam-close" id="scam-close" aria-label="Close">×</button>
+    </div>
+
+    <div class="scam-body">
+      <ol class="scam-tips">
+        <li><strong>See the animal in person</strong> before paying.</li>
+        <li><strong>Check the health and vaccination record</strong>, and ask to see the vet card.</li>
+        <li><strong>Check the seller shows as Verified</strong> on Pet Finder.</li>
+        <li><strong>Never send money</strong> to someone you haven’t met, including by mobile money.</li>
+      </ol>
+
+      <p class="scam-report-thanks" id="scam-report-thanks" role="status"></p>
+
+      <div class="scam-actions">
+        <button type="button" class="btn btn-primary" id="scam-understand" autofocus>I understand</button>
+        <button type="button" class="btn btn-danger-outline" id="scam-report">Report this listing</button>
+      </div>
+    </div>
+  </dialog>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-brand">Pet Finder · Zambia</p>

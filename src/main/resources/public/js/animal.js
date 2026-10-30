@@ -154,7 +154,7 @@ function setUpEnquiryForm(listing) {
 
   document.getElementById("enquiry-message").value = question + " When can I come to see " + them + "?";
 
-  // The form isn't connected to the backend yet, so it only checks the fields and never sends anything.
+  // Check the fields, then show the scam warning. The enquiry is only "sent" after "I understand".
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const firstEmpty = [...form.elements].find((field) => field.required && !field.value.trim());
@@ -164,10 +164,55 @@ function setUpEnquiryForm(listing) {
       firstEmpty.focus();
       return;
     }
-    feedback.textContent = "Sending enquiries isn't switched on yet, so this message was not sent.";
-    feedback.className = "form-feedback";
+    feedback.textContent = "";
+    openScamWarning(() => {
+      // DEMO: nothing is sent yet. Replace this with a call to the backend when it's ready.
+      feedback.textContent = "Enquiry sent (demo). Nothing was really sent to the seller yet.";
+      feedback.className = "form-feedback";
+    });
   });
 }
+
+// ---------- Scam warning pop-up ----------
+
+const scamDialog = document.getElementById("scam-dialog");
+const scamThanks = document.getElementById("scam-report-thanks");
+const scamReportButton = document.getElementById("scam-report");
+
+// What to do when the visitor presses "I understand". Set each time the pop-up opens.
+let afterScamWarning = null;
+
+function openScamWarning(onConfirm) {
+  afterScamWarning = onConfirm;
+  scamThanks.textContent = "";
+  scamReportButton.disabled = false;
+  document.body.classList.add("has-dialog");
+  scamDialog.showModal();
+}
+
+// The buttons are set up once. The × button and Escape just close the pop-up, so nothing is sent.
+document.getElementById("scam-understand").addEventListener("click", () => {
+  const onConfirm = afterScamWarning;
+  afterScamWarning = null;
+  scamDialog.close();
+  if (onConfirm) onConfirm();
+});
+
+document.getElementById("scam-close").addEventListener("click", () => scamDialog.close());
+
+scamReportButton.addEventListener("click", () => {
+  // DEMO: the report isn't sent anywhere yet.
+  scamThanks.textContent = "Thank you. We'll check this listing (demo).";
+  scamReportButton.disabled = true;
+});
+
+// Runs a moment after the pop-up closes, however it was closed.
+// The browser puts keyboard focus back on the "Send enquiry" button by itself.
+scamDialog.addEventListener("close", () => {
+  if (scamDialog.open) return; // already reopened, so this close is out of date
+  afterScamWarning = null;
+  document.body.classList.remove("has-dialog");
+});
 
 async function init() {
   const id = Number(new URLSearchParams(window.location.search).get("id"));

@@ -13,6 +13,7 @@
   --line: #8b867c;
   --line-soft: #d9d3c7;
   --orange: #f4a340;
+  --red: #b3261e;
   --radius: 14px;
   --font: "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
@@ -779,6 +780,124 @@ textarea.text-input { resize: vertical; }
 }
 .form-feedback:empty { display: none; }
 .form-feedback.is-error { color: #a3261b; }
+
+/* ---------- Scam warning pop-up ---------- */
+
+body.has-dialog { overflow: hidden; }
+
+.scam-dialog {
+  width: min(460px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 var(--ink);
+  color: var(--ink);
+  overflow: auto;
+}
+
+.scam-dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
+
+.scam-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--red);
+  color: #fff;
+}
+
+.scam-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--red);
+  border: 2px solid var(--ink);
+}
+
+.scam-title {
+  flex: 1;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.scam-close {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.scam-close:hover { border-color: #fff; }
+
+.scam-body { padding: 20px 22px 22px; }
+
+.scam-tips {
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+  counter-reset: tip;
+}
+
+.scam-tips li {
+  position: relative;
+  margin-bottom: 12px;
+  padding-left: 40px;
+  font-size: 0.92rem;
+  counter-increment: tip;
+}
+
+.scam-tips li::before {
+  content: counter(tip);
+  position: absolute;
+  left: 0;
+  top: -2px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 2px solid var(--ink);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.scam-report-thanks {
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  background: var(--green-soft);
+  border-radius: 10px;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.scam-report-thanks:empty { display: none; }
+
+.scam-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.btn-danger-outline {
+  background: #fff;
+  color: var(--red);
+  border-color: var(--red);
+}
+.btn-danger-outline:hover { background: #fbeceb; }
+.btn:disabled { opacity: 0.55; cursor: default; }
 
 /* ---------- Footer ---------- */
 
