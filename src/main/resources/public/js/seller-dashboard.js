@@ -1,189 +1,138 @@
-// Seller dashboard: verification banner and the "My listings" table for the logged-in seller.
-// Needs js/data.js to be loaded first.
-
-// =====================================================================================
-// DEMO DATA: this page reads the sample data in mock/seed_data.json, not real accounts.
-// There is no real login yet, so we pretend the logged-in seller is seller id 1
-// (Copperbelt Pet Haven). When the backend is ready, get the logged-in seller and
-// their listings from it instead, and delete DEMO_SELLER_ID.
-// =====================================================================================
-const DEMO_SELLER_ID = 1;
-
-const message = document.getElementById("dashboard-message");
-
-const ICON_CHECK =
-  '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-const ICON_CLOCK =
-  '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>';
-
+// Seller dashboard: uses the authenticated seller's own data, not a hard-coded demo ID.
+const dashMessage = document.getElementById("dashboard-message");
+let mySeller = null;
+let myListings = [];
+function statusClass(status) {
+  return status === "Available" ? "tag-green" : status === "Reserved" ? "tag-amber" : "tag-grey";
+}
+function healthText(count) {
+  return count === 0 ? "None yet" : count + (count === 1 ? " record" : " records");
+}
 function showBanner(seller) {
   const banner = document.getElementById("verify-banner");
   const badge = document.getElementById("verify-badge");
   const text = document.getElementById("verify-text");
-
-  if (seller.verified) {
-    banner.classList.add("is-verified");
-    document.getElementById("verify-icon").innerHTML = ICON_CHECK;
-    badge.textContent = "Verified";
-    badge.classList.add("tag-green");
-    text.innerHTML = "<strong>Verified.</strong> Your listings are live.";
-  } else {
-    banner.classList.add("is-pending");
-    document.getElementById("verify-icon").innerHTML = ICON_CLOCK;
-    badge.textContent = "Pending";
-    badge.classList.add("tag-amber");
-    text.innerHTML =
-      "<strong>Pending verification.</strong> Your listings go live once an admin verifies your account.";
-  }
+  const verified = seller.verified;
+  banner.classList.toggle("is-verified", verified);
+  banner.classList.toggle("is-pending", !verified);
+  document.getElementById("verify-icon").textContent = verified ? "✓" : "◷";
+  badge.textContent = verified ? "Verified" : "Pending";
+  badge.className = "tag " + (verified ? "tag-green" : "tag-amber");
+  text.textContent = verified ? "Verified. Your listings are visible to buyers."
+    : "Pending verification. Listings are saved but not publicly visible until verified.";
 }
-
-// 0 -> "None yet", 1 -> "1 record", 2 -> "2 records"
-function healthText(count) {
-  if (count === 0) return "None yet";
-  return count + (count === 1 ? " record" : " records");
-}
-
-function statusClass(status) {
-  if (status === "Available") return "tag-green";
-  if (status === "Reserved") return "tag-amber";
-  return "tag-grey";
-}
-
 function buildRow(listing) {
   const row = document.getElementById("listing-row-template").content.firstElementChild.cloneNode(true);
-  const animal = listing.animal;
-  const name = displayName(listing);
-
+  const a = listing.animal;
   const thumb = row.querySelector(".listing-thumb");
   if (listing.imageUrl) thumb.src = listing.imageUrl;
   thumb.addEventListener("error", () => thumb.removeAttribute("src"));
-
-  row.querySelector(".listing-name").textContent = name;
-  row.querySelector(".listing-sub").textContent = [
-    animal.sex,
-    animal.lifeStage,
-    formatPrice(listing.price) + (listing.quantity > 1 ? " each" : ""),
-  ].join(" · ");
-
-  row.querySelector(".listing-type").textContent = animal.type;
-  row.querySelector(".listing-species").textContent = animal.species + " · " + animal.breed;
-
-  const count = (animal.healthRecords || []).length;
-  const health = row.querySelector(".listing-health");
-  health.textContent = healthText(count);
-  if (count === 0) health.classList.add("is-missing");
-
-  const status = row.querySelector(".listing-status");
-  status.textContent = listing.status;
-  status.classList.add(statusClass(listing.status));
-
-  // Say which animal each button is for, so screen readers don't just hear "Edit, Edit, Edit"
-  row.querySelector(".listing-edit").setAttribute("aria-label", "Edit " + name);
-  row.querySelector(".listing-rehome").setAttribute("aria-label", "Mark " + name + " as rehomed");
-
+  row.querySelector(".listing-name").textContent = displayName(listing);
+  row.querySelector(".listing-sub").textContent = [a.sex, a.lifeStage, formatPrice(listing.price)].join(" · ");
+  row.querySelector(".listing-type").textContent = a.type;
+  row.querySelector(".listing-species").textContent = a.species + " · " + a.breed;
+  row.querySelector(".listing-health").textContent = healthText(a.healthRecords?.length || 0);
+  const badge = row.querySelector(".listing-status");
+  badge.textContent = listing.status;
+  badge.classList.add(statusClass(listing.status));
+  const edit = row.querySelector(".listing-edit");
+  const rehome = row.querySelector(".listing-rehome");
+  edit.setAttribute("aria-label", "Change price of " + a.name);
+  rehome.setAttribute("aria-label", "Mark " + a.name + " as rehomed");
+  edit.addEventListener("click", async () => {
+    const next = window.prompt("New price (kwacha) for " + a.name + ":", String(listing.price));
+    if (next === null) return;
+    if (!/^\d+(\.\d{1,2})?$/.test(next)) { window.alert("Enter a valid price, 0 or more."); return; }
+    await updateListing(listing.id, { price: next });
+  });
+  rehome.addEventListener("click", async () => {
+    if (!window.confirm("Mark " + a.name + " as rehomed?")) return;
+    await updateListing(listing.id, { status: "Rehomed" });
+  });
   return row;
 }
-
+async function updateListing(id, patch) {
+  try {
+    await apiRequest("/api/listings/" + id, { method: "PUT", body: patch });
+    await refreshDashboard();
+  } catch (error) { window.alert("Could not update listing: " + error.message); }
+}
 function showListings(listings) {
-  const rows = document.getElementById("listings-rows");
-
-  if (listings.length === 0) {
-    const row = rows.insertRow();
+  const table = document.getElementById("listings-rows");
+  table.replaceChildren();
+  if (!listings.length) {
+    const row = table.insertRow();
     const cell = row.insertCell();
     cell.colSpan = 5;
     cell.className = "listings-empty";
     cell.textContent = "You haven't added any animals yet.";
-    return;
-  }
-
-  for (const listing of listings) rows.append(buildRow(listing));
+  } else listings.forEach(l => table.append(buildRow(l)));
 }
-
-// ---------- Enquiries ----------
-// DEMO DATA: enquiries come from mock/enquiries.json plus any saved in this browser by animal.html
-// (see loadEnquiries in data.js). The backend will replace this with the seller's real enquiries.
-
-function sameDay(a, b) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+function formatEnquiryDate(value) {
+  return new Date(value).toLocaleString("en-GB", {
+    day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+  });
 }
-
-// "Today, 09:14", "Yesterday, 16:40" or "24 Oct 2026"
-function formatEnquiryDate(isoDate) {
-  const date = new Date(isoDate);
-  const now = new Date();
-  const yesterday = new Date(now);
-  yesterday.setDate(now.getDate() - 1);
-  const time = date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-
-  if (sameDay(date, now)) return "Today, " + time;
-  if (sameDay(date, yesterday)) return "Yesterday, " + time;
-  return date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-}
-
 function buildEnquiryCard(enquiry, listing) {
   const item = document.getElementById("enquiry-template").content.firstElementChild.cloneNode(true);
-
   item.querySelector(".enquiry-buyer").textContent = enquiry.buyerName;
-
-  const date = item.querySelector(".enquiry-date");
-  date.dateTime = enquiry.sentAt;
-  date.textContent = formatEnquiryDate(enquiry.sentAt);
-
-  const animalLink = item.querySelector(".enquiry-animal");
-  animalLink.textContent = displayName(listing);
-  animalLink.href = "animal.html?id=" + encodeURIComponent(listing.id);
-
+  const time = item.querySelector(".enquiry-date");
+  time.dateTime = enquiry.sentAt;
+  time.textContent = formatEnquiryDate(enquiry.sentAt);
+  const link = item.querySelector(".enquiry-animal");
+  link.textContent = displayName(listing);
+  link.href = "animal.html?id=" + listing.id;
   item.querySelector(".enquiry-message").textContent = enquiry.message;
-
   const call = item.querySelector(".enquiry-call");
   call.textContent = "Call " + enquiry.buyerPhone;
   call.href = "tel:" + enquiry.buyerPhone.replace(/[^\d+]/g, "");
-
-  const whatsapp = item.querySelector(".enquiry-whatsapp");
-  whatsapp.href = "https://wa.me/" + whatsappNumber(enquiry.buyerPhone);
-  whatsapp.setAttribute("aria-label", "WhatsApp " + enquiry.buyerName);
-
+  const wa = item.querySelector(".enquiry-whatsapp");
+  wa.href = "https://wa.me/" + whatsappNumber(enquiry.buyerPhone);
+  wa.setAttribute("aria-label", "WhatsApp " + enquiry.buyerName);
   return item;
 }
-
-async function showEnquiries(sellerListings) {
-  const listingsById = new Map(sellerListings.map((l) => [l.id, l]));
-
-  // Only enquiries about this seller's animals, newest first
-  const enquiries = (await loadEnquiries())
-    .filter((e) => listingsById.has(e.listingId))
-    .sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
-
+async function showEnquiries(listings) {
+  const data = await loadEnquiries();
+  const known = new Map(listings.map(l => [l.id, l]));
+  const valid = data.filter(e => known.has(e.listingId));
   const list = document.getElementById("enquiry-list");
-  list.replaceChildren(...enquiries.map((e) => buildEnquiryCard(e, listingsById.get(e.listingId))));
-  document.getElementById("enquiries-empty").hidden = enquiries.length > 0;
+  list.replaceChildren(...valid.map(e => buildEnquiryCard(e, known.get(e.listingId))));
+  document.getElementById("enquiries-empty").hidden = valid.length > 0;
 }
-
-async function init() {
-  let data;
+async function refreshDashboard() {
   try {
-    data = await loadPetData();
+    const data = await apiRequest("/api/sellers/me/listings");
+    myListings = data.listings;
+    showListings(myListings);
+    await showEnquiries(myListings);
+    return myListings;
   } catch (error) {
-    console.error("Could not load dashboard:", error);
-    message.textContent =
-      "Could not load your dashboard. Open this page through a local web server, not by double-clicking the file.";
-    return;
+    dashMessage.hidden = false;
+    dashMessage.textContent = "Could not update dashboard: " + error.message;
+    throw error;
   }
-
-  const seller = findSeller(data, DEMO_SELLER_ID);
-  if (!seller) {
-    message.textContent = "We couldn't find your seller account.";
-    return;
-  }
-
-  document.getElementById("seller-name").textContent = seller.businessName;
-  showBanner(seller);
-  const sellerListings = data.listings.filter((l) => l.sellerId === seller.id);
-  showListings(sellerListings);
-  await showEnquiries(sellerListings);
-
-  message.hidden = true;
-  document.getElementById("dashboard").hidden = false;
 }
-
-init();
+window.refreshDashboard = refreshDashboard;
+async function initDashboard() {
+  try {
+    mySeller = await currentSeller();
+    document.getElementById("seller-name").textContent = mySeller.businessName;
+    showBanner(mySeller);
+    await refreshDashboard();
+    dashMessage.hidden = true;
+    document.getElementById("dashboard").hidden = false;
+  } catch (error) {
+    if (error.status === 401) {
+      window.location.replace("seller-login.html");
+    } else {
+      dashMessage.textContent = "Could not load your dashboard: " + error.message;
+    }
+  }
+}
+const logoutLink = document.querySelector('a.nav-link[href="seller-login.html"]');
+if (logoutLink) logoutLink.addEventListener("click", async event => {
+  event.preventDefault();
+  try { await apiRequest("/api/auth/logout", { method: "POST" }); }
+  finally { window.location.assign("seller-login.html"); }
+});
+initDashboard();
