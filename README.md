@@ -3,6 +3,14 @@
 A Java (Javalin) and MySQL web application connecting animal sellers and buyers.
 The frontend is served by Javalin from `src/main/resources/public`.
 
+| Full Name | Student Number |
+|-----------|----------------|
+| Student One | 2410051      |
+| Student Two | 2410181      |
+| Student Three | 2410157    |
+| Student Four | 2410053     |
+| Student Five | 2410396     |
+
 ## Quick start (Ubuntu)
 
 Start MySQL:
